@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Jogo.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">teste-unidade-2</a> &gt; <a href="index.source.html" class="el_package">br.com.valueprojects.teste_unidade_2.dominio</a> &gt; <span class="el_source">Jogo.java</span></div><h1>Jogo.java</h1><pre class="source lang-java linenums">package br.com.valueprojects.teste_unidade_2.dominio;
+
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+public class Jogo {
+	private String descricao;
+	private List&lt;Resultado&gt; resultados;
+	
+<span class="fc" id="L12">	public Jogo(String descricao) {</span>
+<span class="fc" id="L13">		this.descricao = descricao;</span>
+<span class="fc" id="L14">		this.resultados = new ArrayList&lt;Resultado&gt;();</span>
+<span class="fc" id="L15">	}</span>
+	
+	public void anota(Resultado resultado) {
+<span class="fc bfc" id="L18" title="All 2 branches covered.">		if(resultados.isEmpty() || </span>
+<span class="fc bfc" id="L19" title="All 2 branches covered.">                !resultados.get(ultimoResultadoVisto()).getParticipante().equals(resultado.getParticipante())) {</span>
+<span class="fc" id="L20">            resultados.add(resultado);</span>
+        }
+		
+<span class="fc" id="L23">	}</span>
+
+	private int ultimoResultadoVisto() {
+<span class="fc" id="L26">		return resultados.size()-1;</span>
+	}
+
+	public String getDescricao() {
+<span class="fc" id="L30">		return descricao;</span>
+	}
+
+	public List&lt;Resultado&gt; getResultados() {
+<span class="fc" id="L34">		return Collections.unmodifiableList(resultados);</span>
+	}
+
+    public double calculaMedia() {
+<span class="pc bpc" id="L38" title="2 of 4 branches missed.">      if (resultados == null || resultados.isEmpty()) return 0.0;</span>
+
+<span class="fc" id="L40">        double soma = 0.0;</span>
+<span class="fc" id="L41">        int n = 0;</span>
+<span class="fc bfc" id="L42" title="All 2 branches covered.">        for (Resultado r : resultados) {</span>
+<span class="fc" id="L43">            soma += r.getMetrica(); // ou getNota()</span>
+<span class="fc" id="L44">            n++;</span>
+<span class="fc" id="L45">        }</span>
+<span class="fc" id="L46">        return soma / n;</span>
+    }
+
+	
+
+	//Green - TDD - Ainda falhando - Isso gera 500/2 + 500/2 = 250 + 250 = 250 
+	//(porque a cada iteração você já divide pela quantidade de elementos).
+   // Certo: somar todas as notas primeiro e só depois dividir:
+	/*public double calculaMedia() {
+		double pontuacaoMembroUm = 0.0;
+		double pontuacaoMembroDois = 0.0;
+		
+	    for (Resultado resultado : resultados) {
+	        if (resultado.getParticipante().getNome().equals(&quot;Membro Um&quot;)) {
+	            pontuacaoMembroUm = resultado.getMetrica();
+	        }
+	        if (resultado.getParticipante().getNome().equals(&quot;Membro Dois Costa&quot;)) {
+	            pontuacaoMembroDois = resultado.getMetrica();
+	        }
+	    }
+		return (pontuacaoMembroUm + pontuacaoMembroDois) / 2;
+}*/
+
+	//Green - TDD            
+	/*public double calculaMedia() {
+	                if (resultados == null || resultados.isEmpty()) return 0.0;
+
+	                double soma = 0.0;
+	                int n = 0;
+	                for (Resultado r : resultados) {
+	                    soma += r.getMetrica(); // ou getNota()
+	                    n++;
+	                }
+	                return soma / n;
+		           }*/
+	
+	
+	//Blue - Refactor (option 1)
+	/*public double calculaMedia() {
+	    if (resultados.isEmpty()) return 0.0;
+
+	    double soma = 0.0;
+	    for (Resultado r : resultados) {
+	        soma += r.getMetrica(); // ou getNota()
+	    }
+	    return soma / resultados.size();
+	}
+*/
+	
+	//Blue - Refactor (option 2)
+	
+	/*public double calculaMedia() {
+	    return resultados.stream()
+	            .mapToDouble(Resultado::getMetrica) // ou getNota()
+	            .average()
+	            .orElse(0.0);
+	}*/
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

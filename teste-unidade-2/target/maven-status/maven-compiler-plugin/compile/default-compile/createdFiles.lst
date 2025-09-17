@@ -1,0 +1,6 @@
+br\com\valueprojects\teste_unidade_2\dominio\Juiz.class
+br\com\valueprojects\teste_unidade_2\TesteUnidade2Application.class
+br\com\valueprojects\teste_unidade_2\dominio\Resultado.class
+br\com\valueprojects\teste_unidade_2\dominio\Participante.class
+br\com\valueprojects\teste_unidade_2\builder\CriadorDeJogo.class
+br\com\valueprojects\teste_unidade_2\dominio\Jogo.class
