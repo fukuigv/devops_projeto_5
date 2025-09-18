@@ -47,6 +47,23 @@ public class JulgamentoTest {
     }
 
     @Test
+    void deveJulgarComResultadosEmOrdemAleatoria() {
+        Jogo jogo = new Jogo("Derruba barreiras");
+
+        jogo.anota(new Resultado(katia, 93.0));
+        jogo.anota(new Resultado(pedro, 91.0));
+        jogo.anota(new Resultado(maria, 94.0));
+        jogo.anota(new Resultado(joao, 90.0));
+
+
+
+        juiz.julga(jogo);
+
+        assertEquals(94.0, juiz.getPrimeiroColocado(), 1e-5);
+        assertEquals(90.0, juiz.getUltimoColocado(), 1e-5);
+    }
+
+    @Test
     void naoDeveJulgarSemResultado() {
         Jogo jogo = new CriadorDeJogo()
             .para("Caca pecas")
